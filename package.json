@@ -1,6 +1,6 @@
 {
   "name": "mcp-security-auditor",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Security scanner for MCP (Model Context Protocol) servers. Detect vulnerabilities, secrets, injection risks, and misconfigurations before deployment.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -36,11 +36,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcp-security-auditor/mcp-security-auditor-npm"
+    "url": "https://github.com/prabhubng/mcp-security-auditor-npm"
   },
-  "homepage": "https://github.com/mcp-security-auditor/mcp-security-auditor-npm#readme",
+  "homepage": "https://github.com/prabhubng/mcp-security-auditor-npm#readme",
   "bugs": {
-    "url": "https://github.com/mcp-security-auditor/mcp-security-auditor-npm/issues"
+    "url": "https://github.com/prabhubng/mcp-security-auditor-npm/issues"
   },
   "engines": {
     "node": ">=18.0.0"

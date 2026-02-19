@@ -96,4 +96,4 @@ export const SEVERITY_ORDER: Record<Severity, number> = {
   info: 1,
 };
 
-export const VERSION = "1.0.0";
+export const VERSION = "1.0.2";
