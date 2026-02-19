@@ -1,0 +1,60 @@
+{
+  "name": "mcp-security-auditor",
+  "version": "1.0.0",
+  "description": "Security scanner for MCP (Model Context Protocol) servers. Detect vulnerabilities, secrets, injection risks, and misconfigurations before deployment.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "mcp-audit": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "dev": "ts-node src/cli.ts",
+    "test": "node dist/cli.js scan ./test-fixtures",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "security",
+    "audit",
+    "scanner",
+    "vulnerability",
+    "ai",
+    "llm",
+    "claude",
+    "copilot",
+    "cursor",
+    "devsecops",
+    "sast",
+    "secrets-detection",
+    "prompt-injection",
+    "ci-cd"
+  ],
+  "author": "MCP Security Auditor Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcp-security-auditor/mcp-security-auditor-npm"
+  },
+  "homepage": "https://github.com/mcp-security-auditor/mcp-security-auditor-npm#readme",
+  "bugs": {
+    "url": "https://github.com/mcp-security-auditor/mcp-security-auditor-npm/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "glob": "^10.3.10"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  }
+}

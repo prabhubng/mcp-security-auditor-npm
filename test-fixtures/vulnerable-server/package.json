@@ -1,0 +1,11 @@
+{
+  "name": "vulnerable-test-server",
+  "version": "0.1.0",
+  "description": "Intentionally vulnerable MCP server for testing",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "lodahs": "*",
+    "event-stream": "latest"
+  }
+}

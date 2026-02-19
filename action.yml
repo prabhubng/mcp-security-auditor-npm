@@ -1,0 +1,79 @@
+name: 'MCP Security Auditor'
+description: 'Scan MCP (Model Context Protocol) servers for security vulnerabilities'
+author: 'MCP Security Auditor'
+branding:
+  icon: 'shield'
+  color: 'blue'
+
+inputs:
+  path:
+    description: 'Path to MCP server directory'
+    required: false
+    default: '.'
+  fail-on:
+    description: 'Minimum severity to fail the build (critical, high, medium, low)'
+    required: false
+    default: 'high'
+  format:
+    description: 'Report format (text, json, sarif, html, markdown)'
+    required: false
+    default: 'sarif'
+  output:
+    description: 'Output file path'
+    required: false
+    default: 'mcp-audit-results.sarif'
+  analyzers:
+    description: 'Comma-separated list of analyzers to run'
+    required: false
+    default: ''
+
+outputs:
+  findings:
+    description: 'Total number of findings'
+  critical:
+    description: 'Number of critical findings'
+  high:
+    description: 'Number of high findings'
+  exit-code:
+    description: 'Exit code (0=pass, 1=fail)'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Run MCP Security Audit
+      shell: bash
+      id: audit
+      run: |
+        ARGS="scan ${{ inputs.path }} -f ${{ inputs.format }}"
+        
+        if [ -n "${{ inputs.output }}" ]; then
+          ARGS="$ARGS -o ${{ inputs.output }}"
+        fi
+        
+        if [ -n "${{ inputs.fail-on }}" ]; then
+          ARGS="$ARGS --fail-on ${{ inputs.fail-on }}"
+        fi
+        
+        if [ -n "${{ inputs.analyzers }}" ]; then
+          ARGS="$ARGS -a ${{ inputs.analyzers }}"
+        fi
+        
+        # Also generate JSON for outputs
+        npx mcp-security-auditor@latest scan ${{ inputs.path }} -f json -o /tmp/mcp-audit.json || true
+        
+        TOTAL=$(cat /tmp/mcp-audit.json | jq '.summary.total // 0')
+        CRITICAL=$(cat /tmp/mcp-audit.json | jq '.summary.critical // 0')
+        HIGH=$(cat /tmp/mcp-audit.json | jq '.summary.high // 0')
+        
+        echo "findings=$TOTAL" >> $GITHUB_OUTPUT
+        echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
+        echo "high=$HIGH" >> $GITHUB_OUTPUT
+        
+        # Run the actual command (may exit non-zero with --fail-on)
+        npx mcp-security-auditor@latest $ARGS
+        echo "exit-code=$?" >> $GITHUB_OUTPUT
